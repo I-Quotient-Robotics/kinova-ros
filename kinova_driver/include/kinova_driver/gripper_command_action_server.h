@@ -39,6 +39,8 @@ namespace kinova
         double finger_max_turn_ ; // maximum turn (KinovaFinger defalt unit) value
         double finger_conv_ratio_; // finger value convert ratio defined in kinova_driver/kinova_arm
 
+        ros::Time start_time_;
+
         void goalCBFollow(GCAS::GoalHandle gh);
         void cancelCBFollow(GCAS::GoalHandle gh);
         void controllerStateCB(const kinova_msgs::FingerPositionConstPtr &msg);

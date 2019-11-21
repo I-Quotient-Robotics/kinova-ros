@@ -33,13 +33,13 @@ JointTrajectoryActionController::JointTrajectoryActionController(ros::NodeHandle
         joint_names_[i] = robot_name + "_joint_" + boost::lexical_cast<std::string>(i+1);
     }
 
-    pn.param("constraints/goal_time", goal_time_constraint_, 0.0);
+    pn.param("constraints/goal_time", goal_time_constraint_, 0.5);
     // Gets the constraints for each joint.
     for (size_t i = 0; i < joint_names_.size(); ++i)
     {
         std::string ns = std::string("constraints/") + joint_names_[i];
         double g, t;
-        pn.param(ns + "/goal", g, -1.0);
+        pn.param(ns + "/goal", g, 0.002);
         pn.param(ns + "/trajectory", t, -1.0);
         goal_constraints_[joint_names_[i]] = g;
         trajectory_constraints_[joint_names_[i]] = t;

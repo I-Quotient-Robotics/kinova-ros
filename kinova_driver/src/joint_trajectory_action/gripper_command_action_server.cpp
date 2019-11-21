@@ -119,6 +119,7 @@ void GripperCommandActionController::goalCBFollow(GCAS::GoalHandle gh)
         action_client_set_finger_->sendGoal(goal);
 
     ROS_INFO("Gripper_command_action_server published goal via command publisher!");
+    start_time_ = ros::Time::now();
 }
 
 
@@ -152,6 +153,12 @@ void GripperCommandActionController::controllerStateCB(const kinova_msgs::Finger
     if (abs_error1<gripper_command_goal_constraint_  && abs_error2<gripper_command_goal_constraint_ && abs_error3<gripper_command_goal_constraint_)
     {
         ROS_INFO("Gripper command goal succeeded!");
+        active_goal_.setSucceeded();
+        has_active_goal_ = false;
+    }
+
+    if((ros::Time::now()-start_time_).toSec() > 1.5) {
+        ROS_INFO("Gripper command goal succeeded! (by timeout)");
         active_goal_.setSucceeded();
         has_active_goal_ = false;
     }
