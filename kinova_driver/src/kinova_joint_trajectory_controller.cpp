@@ -101,6 +101,11 @@ void JointTrajectoryController::commandCB(const trajectory_msgs::JointTrajectory
     traj_command_points_ = traj_msg->points;
     ROS_INFO_STREAM("Trajectory controller Receive trajectory with points number: " << traj_command_points_.size());
 
+    if(traj_command_points_.size()==0) {
+        ROS_INFO_STREAM("No points, return directly");
+        return;
+    }
+
     // Map the index in joint_names and the msg
     std::vector<int> lookup(number_joint_, -1);
 
